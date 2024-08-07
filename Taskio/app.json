@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Taskio",
+    "slug": "taskio",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "useNextNotificationsApi": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "18f0c091-491b-4180-a6e6-a26948fc96d6"
+      }
+    },
+    "owner": "fyp_taskio",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/18f0c091-491b-4180-a6e6-a26948fc96d6"
+    },
+    "facebookAppId": "779774240901250",
+    "facebookDisplayName": "Taskio",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+
+  }
+}
