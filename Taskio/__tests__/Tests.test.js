@@ -16,6 +16,7 @@ import { CalendarScreen, TaskScreen, AccountScreen } from '../screens/home';
 import CreateTaskScreen from '../screens/createtask';
 import ManageCategoriesScreen from '../screens/managecategories';
 import EditTaskScreen from '../screens/edittask';
+import TeamListScreen from '../screens/teamlist';
 
 // Mock React Navigation
 const mockNavigate = jest.fn();
