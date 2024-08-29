@@ -10,7 +10,8 @@ import styles from '../css/SignUpCss.js'
 
 // SignUpScreen function
 export default function SignUpScreen({navigation}) {
-
+  
+  const [User, setUser] = useState();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
