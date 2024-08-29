@@ -108,7 +108,6 @@ const getTeam = async () => {
         setMemberRole(MemberRole);
         setMemberUsername(MemberUsername);
         
-        return() => getTeam(Team)
 
     }
     catch (error) {
@@ -121,7 +120,13 @@ const getTeam = async () => {
 //allow the admin to edit team name 
 const updateTeamName = async () => {
   try{
-    const db = getFirestore(app);
+    if (!editName.trim())
+    {
+      Alert.alert("Error","Team name must not be blank!");
+    }
+    else
+    {
+      const db = getFirestore(app);
     //Teams collection from firebase db
     const TeamCollection = collection(db, 'Teams');
     //get the team details based on the DocId
@@ -135,10 +140,13 @@ const updateTeamName = async () => {
         console.log("Team name updated: ", TeamDocId);
         
     });
+    }
+    
   }
   catch (error)
   {
-      console.log("Failed to update team name: ", error);
+    Alert.alert('Error', 'You fail to update the team name.');
+    console.log("Failed to update team name: ", error);
   }
 };
 
@@ -156,6 +164,7 @@ const deleteTeam = async () => {
     //delete the team
     TeamSnapShot.forEach((doc)=>{
        deleteDoc(doc.ref);
+       Alert.alert("Team disbanded.");
        console.log("Team deleted: ", TeamDocId);
         
     });
@@ -215,14 +224,13 @@ const deleteTeam = async () => {
      
     })
 
-
-    Alert.alert("Team disbanned.");
     
    
 }
 catch (error)
 {
-    console.log("Failed to delete team: ", error);
+  Alert.alert("Error", "You fail to delete the team.");
+  console.log("Failed to delete team: ", error);
 }
 };
 
@@ -230,6 +238,12 @@ catch (error)
 //allow members to add folders in the team
 const addFolder = async () => {
   try{
+    if (!folder.trim())
+    {
+      Alert.alert("Error","Folder name must not be blank!");
+    }
+    else
+    {
       const db = getFirestore(app);
       //Folders collection from firebase db
       const FolderCollection = doc(db, 'Folders', TeamDocId);
@@ -242,10 +256,13 @@ const addFolder = async () => {
       const FolderRef = await addDoc(FolderSubCollection, {DocId: id,Folder_Name: folder});
       Alert.alert("Folder created.");
       console.log("Folder added: ", FolderRef.id);
+    }
+
   }
   catch (error)
   {
-      console.log("Failed to add folder: ", error);
+    Alert.alert('Error', 'You fail to add a folder.');
+    console.log("Failed to add folder: ", error);
   }
 }
 
@@ -272,8 +289,6 @@ const addFolder = async () => {
     //save the array to setFolderInfo state
     setFolderInfo(Folders);
 
-
-    return() => getFolder(Folders);
 
   }
   catch(error)
@@ -312,7 +327,6 @@ const addFolder = async () => {
     setProjectInfo(Projects);
     setSearchedData(Projects);
 
-    return() => getProjects(Projects);
 
   }
   catch(error)
@@ -339,13 +353,46 @@ const DeleteProject = async () => {
     //delete the project
     ProjectsSnapShot.forEach((doc)=>{
       deleteDoc(doc.ref);
+      Alert.alert("You have deleted the project successfully.");
       console.log("Project deleted:", DeleteDocId);
-      Alert.alert("Project deleted");
     });
+
+    //Project Tasks collection from firebase db
+    const ProjectTaskCollection = doc(db, 'Project Tasks', TeamDocId);
+    //Project Tasks sub collections based on the team's DocId
+    const ProjectTaskTodayCollection = collection(ProjectTaskCollection, 'Today');
+    const ProjectTaskUpcomingCollection = collection(ProjectTaskCollection, 'Upcoming');
+    const ProjectTaskPastCollection = collection(ProjectTaskCollection, 'Past');
+
+    //Get the documents from the sub collections based on the ProjectDocId
+    const ProjectTaskTodayQuery = query(ProjectTaskTodayCollection, where ('ProjectDocId', '==', DeleteDocId));
+    const ProjectTaskTodaySnapShot = await getDocs(ProjectTaskTodayQuery);
+    const ProjectTaskUpcomingQuery = query(ProjectTaskUpcomingCollection, where('ProjectDocId', '==', DeleteDocId));
+    const ProjectTaskUpcomingSnapShot = await getDocs(ProjectTaskUpcomingQuery);
+    const ProjectTaskPastQuery = query(ProjectTaskPastCollection, where('ProjectDocId', '==', DeleteDocId));
+    const ProjectTaskPastSnapShot = await getDocs(ProjectTaskPastQuery);
+
+    //Delete the documents from the sub collections
+    ProjectTaskTodaySnapShot.forEach((doc)=>{
+      deleteDoc(doc.ref);
+      console.log("Today Project Tasks deleted: ", DeleteDocId);
+    });
+
+    ProjectTaskUpcomingSnapShot.forEach((doc)=>{
+      deleteDoc(doc.ref);
+      console.log("Upcoming Project Tasks deleted: ", DeleteDocId);
+    });
+
+    ProjectTaskPastSnapShot.forEach((doc)=>{
+      deleteDoc(doc.ref);
+      console.log("Past Project Tasks deleted: ", DeleteDocId);
+    });
+
 
   }
   catch(error)
   {
+    Alert.alert('Error','You fail to delete the project.');
     console.log('Fail to delete the project: ', error);
   }
 
@@ -361,13 +408,14 @@ const LeaveTeam = async () => {
     const TeamQuery = query(TeamCollection, where('DocId', '==', TeamDocId));
     const TeamSnapShot = await getDocs(TeamQuery);
 
-    // if the current user is the last member to leave, delete the team and all the related collections 
+    // if the current user is the last member to leave, delete the team and all the related documents 
     if (noOfmembers == 1)
     {
       try{
         //delete the whole team
         TeamSnapShot.forEach((doc)=> {
           deleteDoc(doc.ref);
+          Alert.alert('You have left the team. As the team has no more member, \n the team has disbanded. ');
           console.log('Team disbanned as last member has left the team');
         });
 
@@ -423,8 +471,7 @@ const LeaveTeam = async () => {
          
         });
         
-        
-        Alert.alert('You have left the team. As the team has no more member, \n the team has disbanded. ');
+      
       }
       catch(error)
       {
@@ -446,7 +493,8 @@ const LeaveTeam = async () => {
   }
   catch(error)
   {
-    console.log("Error", error);
+    Alert.alert("Error", "You fail to leave team.");
+    console.log("Fail to leave team: ", error);
   };
  
 
@@ -620,9 +668,9 @@ const LeaveTeam = async () => {
                 ): (
                   //if the current user is a member, display these following menu options
                   <View>
-                     <MenuOption  customStyles={{optionWrapper: styles.CategoryOptions}} value='Member List' text='Member List' onSelect={()=>navigation.navigate('MemberList',{TeamDocId})}/>
-                     <MenuOption  customStyles={{optionWrapper: styles.CategoryOptions}} value='Manage Folders' text='Manage Folders' onSelect={() => navigation.navigate('ManageFolders',{TeamDocId})}/>
-                     <MenuOption  customStyles={{optionWrapper: styles.CategoryOptions}} value='Leave Team' text='Leave Team' onSelect={() => ConfirmAlertLeaveTeam()}/>
+                     <MenuOption  customStyles={{optionWrapper: styles.TeamOptions}} value='Member List' text='Member List' onSelect={()=>navigation.navigate('MemberList',{TeamDocId})}/>
+                     <MenuOption  customStyles={{optionWrapper: styles.TeamOptions}} value='Manage Folders' text='Manage Folders' onSelect={() => navigation.navigate('ManageFolders',{TeamDocId})}/>
+                     <MenuOption  customStyles={{optionWrapper: styles.TeamOptions}} value='Leave Team' text='Leave Team' onSelect={() => ConfirmAlertLeaveTeam()}/>
                   </View>
                 )}
                

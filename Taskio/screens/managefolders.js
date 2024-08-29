@@ -63,8 +63,7 @@ export default function ManageFoldersScreen() {
             //save the array to the setFolderInfo state
             setFolderInfo(Folders);
         
-        
-            return() => getFolder(Folders);
+    
         }
         catch(error)
         {
@@ -77,27 +76,35 @@ export default function ManageFoldersScreen() {
     const UpdateFolder = async () => {
 
         try{
+            if (!editFolder.trim())
+            {
+                Alert.alert("Error","Folder name must not be blank!");
+            }
+            else
+            {
+                const db = getFirestore(app);
+                //Folders collection from firebase db
+                const FolderCollection = doc(db, 'Folders', TeamDocId);
+                //Folders sub collection based on the team's DocId
+                const FolderSubCollection = collection(FolderCollection, 'Folders')
+            
+                //get the folders details based on the folder's DocId
+                const FolderQuery = query(FolderSubCollection, where('DocId', '==', UpdateDocId));
+                const FolderSnapShot = await getDocs(FolderQuery);
 
-            const db = getFirestore(app);
-            //Folders collection from firebase db
-            const FolderCollection = doc(db, 'Folders', TeamDocId);
-            //Folders sub collection based on the team's DocId
-            const FolderSubCollection = collection(FolderCollection, 'Folders')
-        
-            //get the folders details based on the folder's DocId
-            const FolderQuery = query(FolderSubCollection, where('DocId', '==', UpdateDocId));
-            const FolderSnapShot = await getDocs(FolderQuery);
+                //Update the folder details
+                FolderSnapShot.forEach((doc)=>{
+                    updateDoc(doc.ref,{Folder_Name: editFolder});
 
-            //Update the folder details
-            FolderSnapShot.forEach((doc)=>{
-                updateDoc(doc.ref,{Folder_Name: editFolder});
-
-                Alert.alert("Folder updated.");
-                console.log("Folder updated: ", UpdateDocId);
-            });
+                    Alert.alert("You have updated the folder successfully.");
+                    console.log("Folder updated: ", UpdateDocId);
+                });
+            }
+           
         }
         catch(error)
         {
+            Alert.alert("Error", "You fail to update a folder.");
             console.log("Fail to update folder", error);
         }
        
@@ -121,12 +128,13 @@ export default function ManageFoldersScreen() {
             FolderSnapShot.forEach((doc)=>{
                 deleteDoc(doc.ref);
 
-                Alert.alert("Folder deleted.");
+                Alert.alert("You have deleted the folder successfully.");
                 console.log("Folder deleted: ", DeleteDocId);
             });
         }
         catch(error)
         {
+            Alert.alert("Error", "You fail to delete a folder.");
             console.log("Fail to delete folder", error);
         }
     };

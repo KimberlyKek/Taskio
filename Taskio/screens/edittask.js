@@ -269,7 +269,7 @@ export default function EditTaskScreen() {
       //display message if title field is empty
       if (!title.trim())
         {
-          Alert.alert("Task name must not be blank!");
+          Alert.alert("Error","Task name must not be blank!");
         }
       else {
         const db = getFirestore(app);
@@ -315,7 +315,7 @@ export default function EditTaskScreen() {
               
             })() });  
 
-            Alert.alert("Task updated.");
+            Alert.alert("You have updated the task.");
             console.log("Task updated: ", docId);
             
         });
@@ -342,7 +342,7 @@ export default function EditTaskScreen() {
               
             })() });  
 
-            Alert.alert("Task updated.");
+            Alert.alert("You have updated the task.");
             console.log("Task updated: ", docId);
             
         });
@@ -369,7 +369,7 @@ export default function EditTaskScreen() {
               
             })() });  
 
-            Alert.alert("Task updated.");
+            Alert.alert("You have updated the task.");
             console.log("Task updated: ", docId);
             
         });
@@ -378,7 +378,8 @@ export default function EditTaskScreen() {
    }
    catch (error)
    {
-      console.log("Failed to update task: ", error);
+    Alert.alert("Error","You fail to update the task.");
+    console.log("Failed to update task: ", error);
    }
  };
 

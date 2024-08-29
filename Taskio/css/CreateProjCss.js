@@ -10,6 +10,9 @@ export default StyleSheet.create({
       container: {
         flex: 1,
         backgroundColor: "white",
+       
+      },
+      textcon: {
         top: "10%"
       },
     

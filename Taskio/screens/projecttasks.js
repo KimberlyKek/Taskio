@@ -57,7 +57,6 @@ export default function ProjectTasksScreen({navigation}) {
             //save the array to the setProjectName state
             setProjectName(Projects);
 
-            return() => getProjectName(Projects);
         
         });
         }
@@ -175,7 +174,6 @@ export default function ProjectTasksScreen({navigation}) {
             //save the array to settaskinfo state
             settaskinfo(AllTasks);
             
-            return() => getTask(AllTasks);
         }
         catch(error)
         {
@@ -208,28 +206,29 @@ export default function ProjectTasksScreen({navigation}) {
         //Delete the task if the task is under Today sub collection
         ProjectTaskTodaySnapShot.forEach((doc)=>{
            deleteDoc(doc.ref);
-           Alert.alert("Task deleted");
+           Alert.alert("You have deleted this task.");
            console.log("Task deleted: ", DeleteDocId);
         });
  
         //Delete the task if the task is under Upcoming sub collection
         ProjectTaskUpcomingSnapShot.forEach((doc)=>{
-        deleteDoc(doc.ref);
-         Alert.alert("Task deleted");
-           console.log("Task deleted: ", DeleteDocId);
+          deleteDoc(doc.ref);
+          Alert.alert("You have deleted this task.");
+          console.log("Task deleted: ", DeleteDocId);
       });
  
         //Delete the task if the task is under Past sub collection
         ProjectTaskPastSnapShot.forEach((doc)=>{
           deleteDoc(doc.ref);
-        Alert.alert("Task deleted");
-            console.log("Task deleted: ", DeleteDocId);
+          Alert.alert("You have deleted this task.");
+          console.log("Task deleted: ", DeleteDocId);
       });
        
     }
     catch (error)
     {
-        console.log("Failed to delete task: ", error);
+      Alert.alert("Error","You fail to delete the task.");
+      console.log("Failed to delete task: ", error);
     }
   };
 
@@ -257,25 +256,29 @@ export default function ProjectTasksScreen({navigation}) {
            //Update MarkasDone field to true and DisplayDate field to Completed if the task is under Today sub collection
            ProjectTaskTodaySnapShot.forEach((doc)=>{
               updateDoc(doc.ref,{MarkasDone: true, DisplayDate: 'Completed'});
+              Alert.alert("You have marked this task as completed.");
               console.log("Task is mark as done: ", DocIdInfo);
            });
     
            //Update MarkasDone field to true and DisplayDate field to Completed if the task is under Upcooming sub collection
            ProjectTaskUpcomingSnapShot.forEach((doc)=>{
             updateDoc(doc.ref,{MarkasDone: true, DisplayDate: 'Completed'});
+            Alert.alert("You have marked this task as completed.");
             console.log("Task is mark as done: ", DocIdInfo);
          });
 
          //Update MarkasDone field to true and DisplayDate field to Completed if the task is under Past sub collection
          ProjectTaskPastSnapShot.forEach((doc)=>{
           updateDoc(doc.ref,{MarkasDone: true, DisplayDate: 'Completed'});
+          Alert.alert("You have marked this task as completed.");
           console.log("Task is mark as done: ", DocIdInfo);
        });
            
        }
        catch (error)
        {
-           console.log("Failed to complete task: ", error);
+        Alert.alert("Error","You fail to mark the task as complete.");
+        console.log("Failed to complete task: ", error);
        }
      };
 

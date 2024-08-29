@@ -29,7 +29,7 @@ export default function LoginScreen({ navigation}) {
     
       } catch (error) {
         //Display error message
-        Alert.alert('Error', 'Invalid email or password');
+        Alert.alert('Error', 'Your email or password is incorrect. Please try again.');
         console.log('Error signing in:', error);
       }
   };

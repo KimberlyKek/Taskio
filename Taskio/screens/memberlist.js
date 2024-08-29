@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Image, SafeAreaView,TouchableOpacity, TextInput, Alert,Modal,ScrollView,FlatList,RefreshControl} from 'react-native';
-import React, {useEffect, useState,useMemo} from 'react';
+import { Text, View, Image, SafeAreaView,TouchableOpacity, Alert,ScrollView,RefreshControl} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import { getAuth} from 'firebase/auth';
 import {app} from "../firebaseConfig.js"
 import styles from '../css/MemberListCss.js'
@@ -10,7 +10,7 @@ import {useRoute } from '@react-navigation/native';
 
 
 //Member list function
-export default function MemberListScrren({navigation}) {
+export default function MemberListScrren() {
 
     //retrieves the authentication state
     const auth = getAuth();
@@ -95,13 +95,14 @@ export default function MemberListScrren({navigation}) {
             TeamSnapShot.forEach((doc)=>
             {
                 updateDoc(doc.ref, {MembersId: arrayRemove({UserId: DeleteDocId}),Members:arrayRemove({UserId: DeleteDocId, Role: DeleteRole, Username: DeleteUsername})});
-                Alert.alert('Member removed');
+                Alert.alert('You have removed a member successfully.');
                 console.log('Member has being removed from this team:', DeleteDocId);
             })
 
         }
         catch(error)
         {
+            Alert.alert("Error","You fail to remove a member.");
             console.log('Fail to remove member:', error);
         }
 
