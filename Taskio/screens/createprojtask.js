@@ -9,7 +9,7 @@ import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import styles from '../css/homecss.js'
 
-//Create task function
+//Create project task function
 export default function CreateProjectTaskScreen() {
 
   //Get the project DocId and team DocId from the projecttasks.js
@@ -116,28 +116,34 @@ export default function CreateProjectTaskScreen() {
 
   };
 
-  //get priority data from Priority collection in firebase
-  const getPriority = async () => {
+   //get priority data from Priority collection in firebase
+   const getPriority = async () => {
     
-    const db = getFirestore(app);
-    //Priority collection
-    const PriorityCollection = collection(db, 'Priority');
+    try{
+      const db = getFirestore(app);
+      //Priority collection
+      const PriorityCollection = collection(db, 'Priority');
+  
+      //get the priority details from the collection
+      const PrioritySnapShot = await getDocs(PriorityCollection);
+      const Priority = []
+      //save the priority details to Priority array
+      PrioritySnapShot.forEach((doc) => {
+        const {Priority_Lv} = doc.data()
+        Priority.push({
+          Priority: Priority_Lv
+      });
+      });
+      //save the priority elements from array to setPriority state
+      setPriority(Priority);
 
-    const PrioritySnapShot = await getDocs(PriorityCollection);
-    const Priority = []
-    //save the data to Priority array
-    PrioritySnapShot.forEach((doc) => {
-      const {Priority_Lv} = doc.data()
-      Priority.push({
-        Priority: Priority_Lv
-    })
-    })
-    setPriority(Priority)
-
-    return() => getPriority(Priority)
+    }
+    catch(error)
+    {
+      console.log('Fail to get the priority details: ', error);
+    }
 
   };
-
  
   //allow user to create project task to the firebase collection
   const addProjectTask = async () => {
@@ -177,7 +183,7 @@ export default function CreateProjectTaskScreen() {
            Priority: PriorityValue, Notes: notes, Deadline: deadline, AssignTo: assignValue,
             MarkasDone: false, DisplayDate: 'Upcoming'});
           
-            Alert.alert("Task created.");
+            Alert.alert("You have created a task sucessfully.");
             console.log("Task added: ", TaskRef.id);
           
         }
@@ -188,7 +194,7 @@ export default function CreateProjectTaskScreen() {
               Priority: PriorityValue, Notes: notes, Deadline: deadline , AssignTo: assignValue,
               MarkasDone: false,DisplayDate: 'Past'});
               
-            Alert.alert("Task created.");
+            Alert.alert("You have created a task sucessfully.");
             console.log("Task added: ", TaskRef.id);
           } 
         //if the date is today, save the task details to Today sub collection
@@ -198,7 +204,7 @@ export default function CreateProjectTaskScreen() {
             Priority: PriorityValue, Notes: notes, Deadline: deadline , AssignTo: assignValue,
             MarkasDone: false, DisplayDate: 'Today'});
             
-          Alert.alert("Task created.");
+          Alert.alert("You have created a task sucessfully.");
           console.log("Task added: ", TaskRef.id);
         }
        
@@ -206,7 +212,8 @@ export default function CreateProjectTaskScreen() {
     }
     catch (error)
     {
-        console.log("Failed to add task: ", error);
+      Alert.alert("Error","You fail to create a task.");
+      console.log("Failed to add task: ", error);
     }
   };
 

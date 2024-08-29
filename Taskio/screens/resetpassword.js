@@ -18,6 +18,12 @@ export default function ResetPasswordScreen() {
   const forgotpassword = async () => {
     try {
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email.trim())) {
+        Alert.alert("Error", "You must input a valid email format!");
+      }
+      else {
         //connect to Users collection in firebase
         const db = getFirestore(app);
         const usersCollection = collection(db, 'Users');
@@ -30,18 +36,20 @@ export default function ResetPasswordScreen() {
 
         //if email is not registered, display error message
         if (emailSnapshot.empty) {
-            Alert.alert("The email has not registered")
+            Alert.alert("Error","The email has not registered")
         }
         //send the reset password link to the registered email
         else {
             await sendPasswordResetEmail(auth, email)
-            Alert.alert("Reset email has sent to " + email +".")
+            Alert.alert("A reset password has been sent to " + email +".")
         }
+      }
     
       } catch (error) {
         //Display error message
         console.log('Error sending reset email:', error);
       }
+      
   };
   
 

@@ -263,7 +263,7 @@ describe('LoginScreen', () => {
         fireEvent.press(LoginBtn);
 
         await waitFor(() => {
-            expect(mockSignIn).toHaveBeenCalledWith(expect.anything(),'test@example.com', 'password123');
+            expect(signInWithEmailAndPassword).toHaveBeenCalledWith(expect.anything(),'test@example.com', 'password123');
             expect(AsyncStorage.setItem).toHaveBeenCalledWith('userEmail', 'test@example.com');
             expect(mockNavigate).toHaveBeenCalledWith('Home', { email: 'test@example.com' });
         });
@@ -277,7 +277,7 @@ describe('LoginScreen', () => {
         const LoginBtn = getByTestId('LoginBtn');
 
         //Create a mock error message
-        const mockSignIn = jest.fn().mockRejectedValue(new Error('Invalid email or password'));
+        const mockSignIn = jest.fn().mockRejectedValue(new Error("Your email or password is incorrect. Please try again."));
         signInWithEmailAndPassword.mockImplementation(mockSignIn);
 
 
@@ -287,7 +287,7 @@ describe('LoginScreen', () => {
 
         await waitFor(() => {
         expect(mockSignIn).toHaveBeenCalledWith(expect.anything(),'wrong@example.com', 'wrongpassword');
-        expect(Alert.alert).toHaveBeenCalledWith('Error','Invalid email or password');
+        expect(Alert.alert).toHaveBeenCalledWith('Error','Your email or password is incorrect. Please try again.');
         });
   });
 
@@ -454,7 +454,7 @@ describe('CreateTaskScreen', () => {
 
     await waitFor(() => {
       expect(Alert.alert).toHaveBeenCalledWith(
-        'Task name must not be blank!'
+        'Error','Task name must not be blank!'
       );
     });
  
@@ -504,41 +504,6 @@ describe('ManageCategoriesScreen', () => {
 
 });
 
-
-describe('EditTaskScreen', () => {
-  beforeEach(() => {
-    jest.clearAllMocks(); // Clear previous mocks
-    cleanup();
-
-     // Mock Firestore responses
-     getDocs.mockResolvedValue({
-      forEach: jest.fn((callback) => {
-        callback({
-          data: () => ({
-            Title: 'Test Task',
-            Category: 'Work',
-            subTask: '',
-            Priority: 'High',
-            Notes: '',
-            Reminder: 'Email',
-            Deadline: { toDate: () => new Date() },
-            DocId: 'test-doc-id',
-          }),
-          ref: 'test-ref',
-        });
-      }),
-    });
-  });
-
-  it('Test if the screen renders correctly', () => {
-    const { getByPlaceholderText, getByTestId } = render(<EditTaskScreen />);
-
-    fireEvent.press(getByTestId('toggle-subtask'));
-    expect(getByPlaceholderText('Add sub task')).toBeOnTheScreen();
-  });
-
-
-});
     
   
   

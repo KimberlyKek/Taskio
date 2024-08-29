@@ -16,19 +16,11 @@ export default function SignUpScreen({navigation}) {
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
 
-  const [user, setUser] = useState(null);
-
   //retrieves the authentication state
   const auth = getAuth(app);
 
   
   useEffect(() => {
-    //subscribe to the users current authentication state, then set user to setUser state
-    // const subscribe = auth.onAuthStateChanged((user) => {
-    //   setUser(user);
-    // });
-
-    // return () => subscribe();
     subscribe();
   }, [auth]);
 
@@ -43,6 +35,7 @@ export default function SignUpScreen({navigation}) {
   //allow user to sign up with email
   const handleEmailSignup = async () => {
     try {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       //display alert message if the confirm password is not the same as password
       if (password.trim() != confirmpassword.trim())
@@ -53,6 +46,11 @@ export default function SignUpScreen({navigation}) {
       if (!email.trim())
       {
         Alert.alert('Error','You must input an email!');
+      }
+      //display alert message if email format is wrong
+      if (!emailRegex.test(email.trim())) {
+
+        Alert.alert('Error', 'You must input a valid email format!');
       }
       //display alert message if username field is empty
       if (!username.trim())
@@ -102,13 +100,18 @@ export default function SignUpScreen({navigation}) {
 
           //save the user's data to async storage
           await AsyncStorage.multiSet([['userEmail', email], ['userPassword', password], ['username', username]]);
-          Alert.alert("Account created! You can login now");
+          Alert.alert("You have registered successfully! You can login now");
           navigation.navigate('Login');
+        }
+        else
+        {
+          Alert.alert('Error','Email already been used, please use another email');
+          console.log('Email address already existed.');
         }
       }
       //Display error message if system error
       } catch (error) {
-        Alert.alert('Error','Email already been used, please use another email');
+        Alert.alert('Error','You fail to sign up...');
         console.log('Error signing up:', error);
       }
   };

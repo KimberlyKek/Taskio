@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, SafeAreaView, TouchableOpacity, Alert, ScrollView,FlatList,RefreshControl} from 'react-native';
+import { Text, View, SafeAreaView, TouchableOpacity, Alert,FlatList,RefreshControl} from 'react-native';
 import { Separator } from 'react-native-tableview-simple';
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useState} from 'react';
 import { getAuth} from 'firebase/auth';
 import {app} from "../firebaseConfig.js"
 import styles from '../css/TeamListCss.js'
-import { getDocs, collection,getFirestore,query, where, push,doc, arrayUnion,updateDoc,} from 'firebase/firestore';
+import { getDocs, collection,getFirestore,query, where,arrayUnion,updateDoc,} from 'firebase/firestore';
 
 
 
@@ -56,7 +56,6 @@ export default function TeamListScreen() {
      //save the username from UserUsername array to setUsername state
      setUsername(UserUsername[0])
 
-    return() => getUsername(UserUsername)
     }
     catch (error)
     {
@@ -85,7 +84,6 @@ export default function TeamListScreen() {
           //Get the Member role from the array and save to setRole state
           setRole(Roles[1].Role);
 
-          return() => getRole(Roles);
 
       }
       catch (error) {
@@ -118,8 +116,6 @@ export default function TeamListScreen() {
 
           //save the team details from Teams array to setTeamInfo state
           setTeamInfo(Teams);
-
-          return() => getTeams(Teams)
 
       }
       catch (error) {

@@ -66,7 +66,7 @@ export function TaskScreen({navigation}) {
   //For getting all the task details from firebase
   const [taskinfo, settaskinfo] = useState([]);
   //For adding category to the firebase
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState('');
   //For getting all the category details from firebase
   const [categoryinfo, setCategoryInfo] = useState([]);
   //For displaying the task list based on category
@@ -258,28 +258,29 @@ export function TaskScreen({navigation}) {
         //If the task is from Today sub collection, delete it
         TaskTodaySnapShot.forEach((doc)=>{
            deleteDoc(doc.ref);
-           Alert.alert("Task deleted");
+           Alert.alert("You have deleted this task.");
            console.log("Task deleted: ", DeleteDocId);
         });
  
         //If the task is from Upcoming sub collection, delete it
         TaskUpcomingSnapShot.forEach((doc)=>{
           deleteDoc(doc.ref);
-          Alert.alert("Task deleted");
+          Alert.alert("You have deleted this task");
           console.log("Task deleted: ", DeleteDocId);
         });
  
         //If the task is from Past sub collection, delete it
         TaskPastSnapShot.forEach((doc)=>{
           deleteDoc(doc.ref);
-          Alert.alert("Task deleted");
+          Alert.alert("You have deleted this task");
           console.log("Task deleted: ", DeleteDocId);
         });
        
     }
     catch (error)
     {
-        console.log("Failed to delete task: ", error);
+      Alert.alert("Error","You fail to delete the task.");
+      console.log("Failed to delete task: ", error);
     }
   };
 
@@ -309,31 +310,43 @@ export function TaskScreen({navigation}) {
        //If the task is from Today sub collection, update MarkasDone field to true and DisplayDate field to Completed
        TaskTodaySnapShot.forEach((doc)=>{
           updateDoc(doc.ref,{MarkasDone: true, DisplayDate: 'Completed'});
+          Alert.alert("You have marked this task as completed.");
           console.log("Task is mark as done: ", DoneDocId);
        });
 
       //If the task is from Upcoming sub collection, update MarkasDone field to true and DisplayDate field to Completed
       TaskUpcomingSnapShot.forEach((doc)=>{
         updateDoc(doc.ref,{MarkasDone: true, DisplayDate: 'Completed'});
+        Alert.alert("You have marked this task as completed.");
         console.log("Task is mark as done: ", DoneDocId);
      });
 
       //If the task is from Past sub collection, update MarkasDone field to true and DisplayDate field to Completed
       TaskPastSnapShot.forEach((doc)=>{
         updateDoc(doc.ref,{MarkasDone: true, DisplayDate: 'Completed'});
+        Alert.alert("You have marked this task as completed.");
         console.log("Task is mark as done: ", DoneDocId);
     });
        
    }
    catch (error)
    {
-       console.log("Failed to complete task: ", error);
+      Alert.alert("Error","You fail to mark the task as complete.");
+      console.log("Failed to complete task: ", error);
    }
  };
 
   // add the category details to Category collection in firebase, using user's id
   const addCategory = async () => {
     try{
+
+      //Display message if the name field is empty
+      if (!category.trim())
+      {
+        Alert.alert("Error","Category name must not be blank!");
+      }
+      else
+      {
         const db = getFirestore(app);
         //Category main collection from firebase db
         const CategoryCollection = doc(db, 'Category', user.uid);
@@ -345,12 +358,15 @@ export function TaskScreen({navigation}) {
         const id = Ref.id;
         //Save the category details to the collection
         const CategoryRef = await addDoc(CategorySubCollection, {DocId: id,Category_Title: category});
-        Alert.alert("Category created.");
+        Alert.alert("You have created a category successfully.");
         console.log("Category added: ", CategoryRef.id);
+      }
+        
     }
     catch (error)
     {
-        console.log("Failed to add category: ", error);
+      Alert.alert("Error","You fail to create a category.");
+      console.log("Failed to add category: ", error);
     }
   }
   
@@ -889,23 +905,31 @@ export function AccountScreen() {
 
   //get the user's username from the Users collection
   const getUsername = async () => {
-    const db = getFirestore(app);
-    //Users collection from firebase
-    const UserCollection = collection(db, 'Users');
+    try
+    {
+      const db = getFirestore(app);
+      //Users collection from firebase
+      const UserCollection = collection(db, 'Users');
 
-    //get the username based on the current user's id
-    const UsernameQuery = query(UserCollection, where('userId', '==', user.uid));
-    const UsernameSnapShot = await getDocs(UsernameQuery);
-    const UserUsername = [];
-    //save the username to UserUsername array
-    UsernameSnapShot.forEach((doc) => {
-      const {username} = doc.data()
-      UserUsername.push([
-        username
-      ]);
-    });
-    //save the username from UserUsername array to setUsername state
-    setUsername(UserUsername);
+      //get the username based on the current user's id
+      const UsernameQuery = query(UserCollection, where('userId', '==', user.uid));
+      const UsernameSnapShot = await getDocs(UsernameQuery);
+      const UserUsername = [];
+      //save the username to UserUsername array
+      UsernameSnapShot.forEach((doc) => {
+        const {username} = doc.data()
+        UserUsername.push([
+          username
+        ]);
+      });
+      //save the username from UserUsername array to setUsername state
+      setUsername(UserUsername);
+    }
+    catch(error)
+    {
+      console.log("Fail to get the user's username: ", error);
+    }
+   
 
   };
 

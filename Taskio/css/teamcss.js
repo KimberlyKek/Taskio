@@ -198,7 +198,7 @@ ProjectNameCon: {
   fontWeight: 'bold',
   color: 'black',
   marginBottom: 20,
-  left: "10%"
+  left: "15%"
 },
 
 noTaskTxt: {

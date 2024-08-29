@@ -6,16 +6,12 @@ import * as Facebook from 'expo-facebook';
 import { getAuth, signInWithCredential, GoogleAuthProvider, FacebookAuthProvider} from 'firebase/auth';
 import {app} from "../firebaseConfig.js";
 
-
-
-
 // WelcomeScreen function
 export default function WelcomeScreen({ navigation}) {
 
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
   const facebookAppId = '779774240901250';
-
 
   useEffect(() => {
     subscribe();
@@ -29,16 +25,15 @@ export default function WelcomeScreen({ navigation}) {
     return () => subscribe();
   }
 
+  //handle google sign in
   const GoogleSignIn = async() => {
 
     try{
-      
       const provider = new GoogleAuthProvider(app);
       provider.setCustomParameters({   
         prompt : "select_account "
       });
       const signInWithGooglePopup = () => signInWithCredential(auth, provider);
-      //provider.setCustomParameters({ prompt: 'select_account', });
       const response = await signInWithGooglePopup();
       console.log(response)
     }
@@ -48,6 +43,7 @@ export default function WelcomeScreen({ navigation}) {
     }
   };
 
+  //handle facebook sign in
   const FacebookSignInHandler = async () => {
     try {
       await Facebook.initializeAsync({ appId: facebookAppId });
@@ -110,8 +106,6 @@ export default function WelcomeScreen({ navigation}) {
                 </TouchableOpacity>
                
                 </View>
-                
-                
                
             </View>
             

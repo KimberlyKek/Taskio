@@ -68,7 +68,6 @@ export default function EditProjectScreen() {
             //save the array to setFolderInfo state
             setFolderInfo(Folders);
         
-            return() => getFolder(Folders);
         }
         catch(error)
         {
@@ -119,7 +118,7 @@ export default function EditProjectScreen() {
             //display alert message if project name field is empty
             if (!projectName.trim())
                 {
-                Alert.alert("Project name must not be blank!");
+                Alert.alert("Error","Project name must not be blank!");
                 }
             else {
                 const db = getFirestore(app);
@@ -142,6 +141,7 @@ export default function EditProjectScreen() {
         }
         catch(error)
         {
+            Alert.alert('Error', 'You fail to update the project.');
             console.log("Fail to update project info", error)
         }
     };
@@ -150,43 +150,42 @@ export default function EditProjectScreen() {
         <SafeAreaView style={styles.SafeAreaView}>
           <View style={styles.container}>
             <View style={styles.textcon}>
-              <View style={styles.textsubcon}>
                 <Text style={styles.TextContainer}>Edit {projectName} </Text>
-              </View>
-              <ScrollView contentContainerStyle={{paddingBottom: 100}} >
-                <TextInput style={styles.textinput}  defaultValue ={projectName} onChangeText={(value)=>setProjectName(value)} />
+             
+                <ScrollView contentContainerStyle={{paddingBottom: 100}} >
+                    <TextInput style={styles.textinput}  defaultValue ={projectName} onChangeText={(value)=>setProjectName(value)} />
                
-                <View>
-                <Text style={styles.txt}>Folder:</Text>
-              <RNPickerSelect 
-                placeholder={Folderplaceholder} 
-                items={Folderoptions} 
-                onValueChange={(value)=>setFolderValue(value)}
-                value={folderValue}
-                style={styles}
-                useNativeAndroidPickerStyle={false}
-                /> 
-            </View>
+                    <View>
+                     <Text style={styles.txt}>Folder:</Text>
+                    <RNPickerSelect 
+                        placeholder={Folderplaceholder} 
+                        items={Folderoptions} 
+                        onValueChange={(value)=>setFolderValue(value)}
+                        value={folderValue}
+                        style={styles}
+                        useNativeAndroidPickerStyle={false}
+                        /> 
+                    </View>
 
-            <View>
-            <Text style={styles.txt}>Select colour:</Text>
-                <ColorPicker
-                    color={projectColour}
-                    onColorChangeComplete={(color) => setProjectColour(color)}
-                    noSnap={true}
-                    row={false}
-                    swatches={false}
-                    useNativeDriver={false}
-                    useNativeLayout={false}
-                    style={styles.ColourStyle}
-                />
-                </View>
-                <View style={styles.Projbuttoncontainer}>
-                <TouchableOpacity  style={styles.Projbutton}>
-                <Text style={styles.ProjbuttonText} onPress={UpdateProject}>Save</Text>
-                </TouchableOpacity>
-                </View> 
-                    </ScrollView>
+                    <View>
+                        <Text style={styles.txt}>Select colour:</Text>
+                            <ColorPicker
+                                color={projectColour}
+                                onColorChangeComplete={(color) => setProjectColour(color)}
+                                noSnap={true}
+                                row={false}
+                                swatches={false}
+                                useNativeDriver={false}
+                                useNativeLayout={false}
+                                style={styles.ColourStyle}
+                            />
+                        </View>
+                        <View style={styles.Projbuttoncontainer}>
+                            <TouchableOpacity  style={styles.Projbutton}>
+                            <Text style={styles.ProjbuttonText} onPress={UpdateProject}>Save</Text>
+                            </TouchableOpacity>
+                        </View> 
+                </ScrollView>
               </View>
               </View>
               </SafeAreaView>

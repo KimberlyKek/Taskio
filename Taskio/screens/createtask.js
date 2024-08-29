@@ -212,7 +212,7 @@ export default function CreateTaskScreen() {
       //Display message if the title field is empty
       if (!task.trim())
         {
-          Alert.alert("Task name must not be blank!")
+          Alert.alert("Error","Task name must not be blank!")
         }
       //add the task details to the collection
       else {
@@ -223,7 +223,7 @@ export default function CreateTaskScreen() {
             Category: categoryValue, Priority: PriorityValue, Notes: notes, Deadline: deadline , Reminder: ReminderValue, 
             MarkasDone: false, DisplayDate: 'Upcoming'});
           
-            Alert.alert("Task created.");
+            Alert.alert("You have created a task sucessfully.");
             console.log("Task added: ", TaskRef.id);
           
         }
@@ -234,7 +234,7 @@ export default function CreateTaskScreen() {
               Category: categoryValue, Priority: PriorityValue, Notes: notes, Deadline: deadline , Reminder: ReminderValue, 
               MarkasDone: false,DisplayDate: 'Past'});
               
-            Alert.alert("Task created.");
+            Alert.alert("You have created a task sucessfully.");
             console.log("Task added: ", TaskRef.id);
           } 
         //if the date user has key in is today, set the DisplayDate field as 'Today' and save the task details to Today sub collection
@@ -244,7 +244,7 @@ export default function CreateTaskScreen() {
             Category: categoryValue, Priority: PriorityValue, Notes: notes, Deadline: deadline , Reminder: ReminderValue, 
             MarkasDone: false, DisplayDate: 'Today'});
             
-          Alert.alert("Task created.");
+          Alert.alert("You have created a task sucessfully.");
           console.log("Task added: ", TaskRef.id);
         }
        
@@ -252,6 +252,7 @@ export default function CreateTaskScreen() {
     }
     catch (error)
     {
+        Alert.alert("Error","You fail to create a task.");
         console.log("Failed to add task: ", error);
     }
   };

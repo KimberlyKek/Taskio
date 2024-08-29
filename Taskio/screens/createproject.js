@@ -10,7 +10,7 @@ import ColorPicker from 'react-native-wheel-color-picker'
 import {useRoute } from '@react-navigation/native';
 
 
-//Create task function
+//Create project function
 export default function CreateProjectScreen() {
 
     //get the team's DocId from team.js
@@ -83,7 +83,7 @@ export default function CreateProjectScreen() {
       //display alert message if project name is blank
       if (!project.trim())
         {
-          Alert.alert("Project name must not be blank!")
+          Alert.alert("Error", "Project name must not be blank!")
         }
         else
         {
@@ -103,6 +103,7 @@ export default function CreateProjectScreen() {
     }
     catch (error)
     {
+        Alert.alert("Error", "You fail to create a project.");
         console.log("Failed to add project: ", error);
     }
   };
@@ -110,6 +111,7 @@ export default function CreateProjectScreen() {
     return (
         <SafeAreaView style={styles.SafeAreaView}>
           <View style={styles.container}>
+            <View style={styles.textcon}>
             <Text style={styles.TextContainer}>Create New Project</Text>
             <ScrollView contentContainerStyle={{paddingBottom: 100}} >
               <TextInput style={styles.textinput} placeholder='New Project' value ={project} onChangeText={(value)=>setProject(value)} />
@@ -143,6 +145,7 @@ export default function CreateProjectScreen() {
                 
                     </View>
                     </ScrollView>
+                </View>
             </View>
           </SafeAreaView>
     )

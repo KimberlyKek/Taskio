@@ -6,7 +6,7 @@ import React, {useEffect, useState} from 'react';
 import { getAuth} from 'firebase/auth';
 import {app} from "../firebaseConfig.js"
 import styles from '../css/ManageCategoriesCss.js'
-import { getDocs, collection,getFirestore,query, where, push, deleteDoc,updateDoc, doc} from 'firebase/firestore';
+import { getDocs, collection,getFirestore,query, where, deleteDoc,updateDoc, doc} from 'firebase/firestore';
 
 //Manage categories function
 export default function ManageCategoriesScreen() {
@@ -82,7 +82,7 @@ export default function ManageCategoriesScreen() {
         CategorySnapShot.forEach((doc)=>{
           deleteDoc(doc.ref);
             
-           Alert.alert("Category deleted.");
+           Alert.alert("You have deleted this category.");
            console.log("Category deleted: ", DeleteDocId);
         });
        
@@ -95,7 +95,14 @@ export default function ManageCategoriesScreen() {
 
   //edit category details based on the category's DocId
   const updateCategory = async () => {
-        try{
+
+    try{
+      if (!editCategory.trim())
+        {
+          Alert.alert("Error","Category name must not be blank!");
+        }
+        else
+        {
           const db = getFirestore(app);
           //Category main collection from firebase db
           const CategoryCollection = doc(db, 'Category', user.uid);
@@ -110,6 +117,7 @@ export default function ManageCategoriesScreen() {
               Alert.alert("Category updated.");
               console.log("Category updated: ", DocIdInfo);
           });
+        }
           
       }
       catch (error)

@@ -8,7 +8,7 @@ import styles from '../css/EditTaskCss.js'
 import { getDocs, collection,getFirestore,query, where, push,updateDoc, doc,get} from 'firebase/firestore';
 import {useRoute } from '@react-navigation/native';
 
-//Edit task function
+//Edit project task function
 export default function EditProjectTaskScreen() {
 
     //Get the team DocId and project task DocId from projecttasks.js
@@ -298,7 +298,7 @@ const UpdateProjectTask = async() => {
                     
                 })() });  
     
-                Alert.alert("Task updated.");
+                Alert.alert("You have updated the task successfully.");
                 console.log("Task updated: ", TaskdocId);
                 
             });
@@ -325,7 +325,7 @@ const UpdateProjectTask = async() => {
                     
                 })() });  
     
-                Alert.alert("Task updated.");
+                Alert.alert("You have updated the task successfully.");
                 console.log("Task updated: ", TaskdocId);
                 
             });
@@ -352,7 +352,7 @@ const UpdateProjectTask = async() => {
                     
                 })() });  
     
-                Alert.alert("Task updated.");
+                Alert.alert("Error","You have updated the task successfully.");
                 console.log("Task updated: ", TaskdocId);
                 
             });
@@ -362,7 +362,8 @@ const UpdateProjectTask = async() => {
     }
     catch(error)
     {
-        console.log('Fail to update task:', error);
+      Alert.alert("You failed to update the task.");
+      console.log('Fail to update task:', error);
     }
 };
 
