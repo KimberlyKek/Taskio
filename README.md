@@ -17,4 +17,4 @@ This project was done by a student in UOL's CS Degree for the final year project
 9. Now you should be able to launch the app!
 10. For testing, run the test: npm test
 
-Note for markers: In a scenario where you are unable to see the full application due to mobile resolution size differences, please watch for video. User login credentials are written in the final report.
+Note for markers: In a scenario where you are unable to see the full application due to mobile resolution size differences, please watch the video. User login credentials are written in the final report.
