@@ -16,3 +16,5 @@ This project was done by a student in UOL's CS Degree for the final year project
 8. Scan the QR code in the terminal. For android user, open Expo Go app and scan it. For iOS user, use camera app to scan
 9. Now you should be able to launch the app!
 10. For testing, run the test: npm test
+
+Note for markers: In a scenario where you are unable to see the full application due to mobile resolution size differences, please watch for video. User login credentials are written in the final report.
