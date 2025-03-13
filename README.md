@@ -17,7 +17,7 @@ The Taskio application is designed to be a comprehensive task and project manage
 -**Tasks Status**: Mark tasks as completed. <br>
 -**Search Tasks**: Search tasks by keywords
 -**Task Categorization**: Categorize tasks into groups (e.g., Work, Study, Personal), including updating and deleting the categories details. <br>
--**Team Collaboration**: Allow multiple users to work on the project tasks together, assign tasks to team members and track progress in real-time.
+-**Team Collaboration**: Allow multiple users to work on the project tasks together, assign tasks to team members and track progress in real-time. <br>
 -**Manage Teams**: Manage the team by updating the team details and removing team members from the team.
 
 ## Technologies Used
