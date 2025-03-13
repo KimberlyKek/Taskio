@@ -39,7 +39,7 @@ The Taskio application is designed to be a comprehensive task and project manage
 3. Clone the respository: <br>
 ```
 git clone https://github.com/KimberlyKek/Taskio.git
-cd Taskio
+cd Taskio/Taskio
 ```
 4. Install NPM Package: <br>
 ```
