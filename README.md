@@ -6,6 +6,9 @@ This project is created by a student studied at SIM-UOL under Computer Science d
 
 The Taskio application is designed to be a comprehensive task and project management tool that facilitates organization, collaboration, and productivity for its users. 
 
+![image](https://github.com/user-attachments/assets/3781d571-f41c-4ade-968e-96cfb80a852a) <br>
+![image](https://github.com/user-attachments/assets/75fb26ff-4dfd-4de2-8645-79f597b5318a) ![image](https://github.com/user-attachments/assets/cf170e4d-c841-4366-9bc0-1c01a3e6e92c)
+
 ## Features
 -**User Authentication**: Users sign up and log in <br>
 -**Create Tasks**: Add new tasks with title, sub task, priority, notes, category and deadline. <br>
@@ -35,14 +38,25 @@ The Taskio application is designed to be a comprehensive task and project manage
 2. For iOS user, register and login to Expo account
 3. Clone the respository: <br>
 ```
-git clone 
+git clone https://github.com/KimberlyKek/Taskio.git
+cd Taskio
 ```
-4. Extract and move the folder to other location such as Desktop, documents etc where you can find the folder easily
-5. Open the folder in VS Code
-6. Open the terminal, cd to Taskio and install expo: npm install expo
-7. Start the expo: npx expo start
-8. Scan the QR code in the terminal. For android user, open Expo Go app and scan it. For iOS user, use camera app to scan
-9. Now you should be able to launch the app!
-10. For testing, run the test: npm test
+4. Install NPM Package: <br>
+```
+npm install
+```
+5. Install Expo: <br>
+```
+npm install expo
+```
+6. Start the application:
+```
+npx expo start
+```
+7. Scan the QR code in the terminal. For android user, open Expo Go app and scan it. For iOS user, use camera app to scan
+8. Now you should be able to launch the app!
+9. For testing, run the test: <br>
+```
+npm test
+```
 
-Note for markers: In a scenario where you are unable to see the full application due to mobile resolution size differences, please watch the video. User login credentials are written in the final report.
