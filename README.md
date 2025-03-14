@@ -6,8 +6,12 @@ This project is created by a student studied at SIM-UOL under Computer Science d
 
 The Taskio application is designed to be a comprehensive task and project management tool that facilitates organization, collaboration, and productivity for its users. 
 
-![image](https://github.com/user-attachments/assets/3781d571-f41c-4ade-968e-96cfb80a852a) <br>
-![image](https://github.com/user-attachments/assets/75fb26ff-4dfd-4de2-8645-79f597b5318a) ![image](https://github.com/user-attachments/assets/cf170e4d-c841-4366-9bc0-1c01a3e6e92c)
+![image](https://github.com/user-attachments/assets/9c01fc3d-640e-46b6-981d-b283027703f0) ![image](https://github.com/user-attachments/assets/9f391245-9a79-42e1-92d6-350cbb0f50d1)
+ <br>
+![image](https://github.com/user-attachments/assets/723e9f65-2d64-4a4b-a0f7-1926e5f3c77d) ![image](https://github.com/user-attachments/assets/7f3035f0-4270-4330-b0f2-4f74b998129f)
+
+
+
 
 ## Features
 -**User Authentication**: Users sign up and log in <br>
@@ -59,4 +63,6 @@ npx expo start
 ```
 npm test
 ```
+
+Video demo can be found here: https://drive.google.com/file/d/1TOwWt_2kk6WqbPGqTZnQ0ZckJhsb1Cjh/view?usp=sharing
 
