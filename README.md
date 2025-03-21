@@ -6,11 +6,13 @@ This project is created by a student studied at SIM-UOL under Computer Science d
 
 The Taskio application is designed to be a comprehensive task and project management tool that facilitates organization, collaboration, and productivity for its users. 
 
+## Flow Chart
+![image](https://github.com/user-attachments/assets/6e4a0d78-aae1-4f28-869a-6c38cc43eb12)
+
+## App
 ![image](https://github.com/user-attachments/assets/9c01fc3d-640e-46b6-981d-b283027703f0) ![image](https://github.com/user-attachments/assets/9f391245-9a79-42e1-92d6-350cbb0f50d1)
  <br>
 ![image](https://github.com/user-attachments/assets/723e9f65-2d64-4a4b-a0f7-1926e5f3c77d) ![image](https://github.com/user-attachments/assets/7f3035f0-4270-4330-b0f2-4f74b998129f)
-
-
 
 
 ## Features
